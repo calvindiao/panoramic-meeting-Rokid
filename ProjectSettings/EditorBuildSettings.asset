@@ -8,13 +8,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr-MainScene.unity
     guid: fe6c27d7034c9fb47b07dad31fbf9128
-  - enabled: 1
+  - enabled: 0
     path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr000-HelloRokid.unity
     guid: ce94114067a887b4f89c030c36c9a496
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr005-GamePadController.unity
     guid: f62e245c23360ba40be7cdcd93571fd3
   m_configObjects:
