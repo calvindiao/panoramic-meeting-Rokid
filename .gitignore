@@ -4,6 +4,7 @@
 /[Bb]uild/
 /[Bb]uilds/
 /[Aa]uto[Bb]uild/
+test_BackUpThisFolder_ButDontShipItWithYourGame/
 
 .vscode/
 .vs/
@@ -22,3 +23,4 @@
 
 *.log
 *.pyc
+
