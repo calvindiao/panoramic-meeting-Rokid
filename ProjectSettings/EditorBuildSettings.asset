@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr-MainScene.unity
     guid: fe6c27d7034c9fb47b07dad31fbf9128
   - enabled: 0
@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/test.unity
     guid: afd1f7f9ae29814418484e0386055300
-  - enabled: 1
+  - enabled: 0
     path: Assets/AVProVideo/Demos/Scenes/Demo_360Stereo.unity
     guid: ca8fdd4aa85509743878be7fbacf5a4f
   m_configObjects:
