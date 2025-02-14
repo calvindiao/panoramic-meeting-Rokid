@@ -9,14 +9,6 @@ namespace Rokid.UXR.Demo
         int minVersionForAirAppRequired = 190;//190: Air app v1.9.0
         void Start()
         {
-            /*if (UsbDeviceHelper.GetGlassPID() == 5677) // camera permission is needed for 5677 glass
-            {
-                if (!Permission.HasUserAuthorizedPermission(Permission.Camera))
-                {
-                    Permission.RequestUserPermission(Permission.Camera);
-                }
-            }*/
-
             if (Application.platform == RuntimePlatform.Android)
             {
                 Google.XR.Cardboard.Api.UpdateScreenParams();

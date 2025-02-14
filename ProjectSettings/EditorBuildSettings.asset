@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr-MainScene.unity
     guid: fe6c27d7034c9fb47b07dad31fbf9128
-  - enabled: 0
+  - enabled: 1
     path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr000-HelloRokid.unity
     guid: ce94114067a887b4f89c030c36c9a496
   - enabled: 0
@@ -23,5 +23,35 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/AVProVideo/Demos/Scenes/Demo_360Stereo.unity
     guid: ca8fdd4aa85509743878be7fbacf5a4f
+  - enabled: 0
+    path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr001-HeadTracking.unity
+    guid: 52340b42ed0462f4d987e08f0789a2b2
+  - enabled: 0
+    path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr002-GestureRecognize.unity
+    guid: ba1c78ee4c0c3364a9aae64abfe967f6
+  - enabled: 0
+    path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr003-VoiceRecognize.unity
+    guid: 672930b496eafdc40873bb012fc9f55c
+  - enabled: 1
+    path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr004-NormalController.unity
+    guid: 48132165535df734eb87f5f11252f2df
+  - enabled: 0
+    path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr006-Phone3DofController.unity
+    guid: c766148106e947d40bb6f97adcac50a6
+  - enabled: 0
+    path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr007-GlassScreenRecorder.unity
+    guid: 4f757f78096e0964fbf5f17c6916b4f0
+  - enabled: 0
+    path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr008-GlassCamera.unity
+    guid: eb5ddf8c5113cf24d9fb3cf90ed4390a
+  - enabled: 0
+    path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr009-WebViewController.unity
+    guid: 41b5afa21d1fad646ab991162558f2e8
+  - enabled: 0
+    path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr010-GestureForRay.unity
+    guid: beea7f4cc383e88489c28af58bbb90c5
+  - enabled: 0
+    path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr011-GlassScreenProjection.unity
+    guid: 0f9b75bf9b5a53d46908707c559fba28
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: b74ed897952c65a498927a9d6a4b1e21, type: 2}
