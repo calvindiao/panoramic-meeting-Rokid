@@ -53,7 +53,7 @@ namespace Rokid.UXR.Demo
                         isRecording = true;
                     }, faild =>
                     {
-                        Debug.Log("录屏失败:" + faild);
+                        Debug.Log("failed:" + faild);
                     }, path, false);
                 }
                 else
@@ -62,7 +62,7 @@ namespace Rokid.UXR.Demo
                     {
                         isRecording = false;
                         recordButton.GetComponentInChildren<Text>().text = "Start Record";
-                        capTxt.text = "录屏保存的路径:" + path;
+                        capTxt.text = "Screen recording saved path:" + path;
                     });
                 }
             });

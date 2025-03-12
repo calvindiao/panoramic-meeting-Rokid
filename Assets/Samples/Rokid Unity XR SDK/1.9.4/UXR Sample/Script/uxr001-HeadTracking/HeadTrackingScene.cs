@@ -16,7 +16,7 @@ namespace Rokid.UXR.Demo
         void Start()
         {
             AutoInjectComponent.AutoInject(transform, this);
-
+            
             // Configures the app to not shut down the screen
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
