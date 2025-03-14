@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/test.unity
     guid: afd1f7f9ae29814418484e0386055300
   - enabled: 1
+    path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr004-NormalController.unity
+    guid: 48132165535df734eb87f5f11252f2df
+  - enabled: 1
     path: Assets/AVProVideo/Demos/Scenes/Demo_360Stereo.unity
     guid: ca8fdd4aa85509743878be7fbacf5a4f
   - enabled: 0
@@ -32,9 +35,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr003-VoiceRecognize.unity
     guid: 672930b496eafdc40873bb012fc9f55c
-  - enabled: 1
-    path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr004-NormalController.unity
-    guid: 48132165535df734eb87f5f11252f2df
   - enabled: 0
     path: Assets/Samples/Rokid Unity XR SDK/1.9.4/UXR Sample/Scenes/uxr006-Phone3DofController.unity
     guid: c766148106e947d40bb6f97adcac50a6

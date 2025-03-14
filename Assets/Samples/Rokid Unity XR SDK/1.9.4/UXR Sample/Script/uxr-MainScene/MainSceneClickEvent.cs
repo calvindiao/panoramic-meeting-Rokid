@@ -15,7 +15,7 @@ namespace Rokid.UXR.Demo
                     SceneManager.LoadScene("uxr001-HeadTracking");
                     break;
                 case 2:
-                    SceneManager.LoadScene("uxr002-GestureRecognize");
+                    SceneManager.LoadScene("Demo_360Stereo");
                     break;
                 case 3:
                     SceneManager.LoadScene("uxr003-VoiceRecognize");

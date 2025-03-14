@@ -27,6 +27,45 @@ namespace Rokid.UXR.Demo
 
         void Start()
         {
+
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                Google.XR.Cardboard.Api.UpdateScreenParams();
+            }
+
+            KeycodeInputModule.Instance.Initialized();
+
+            OfflineVoiceModule.Instance.AddInstruct(LANGUAGE.CHINESE, "回到桌面", "hui dao zhuo mian", gameObject.name, "OnReceive");
+            OfflineVoiceModule.Instance.AddInstruct(LANGUAGE.CHINESE, "退出应用", "tui chu yin yong", gameObject.name, "OnReceive");
+            OfflineVoiceModule.Instance.Commit();
+
+            RKVirtualController.Instance.Change(ControllerType.NORMAL);
+
+            RKVirtualController.Instance.ConfigMenuView(true, true, true, true);
+
+            UsbDeviceHelper.registerGlassSensorEvent();
+            UsbDeviceHelper.setUSBStatusCallback();
+            UsbDeviceHelper.OnPSensorUpdate += connect =>
+            {
+                Debug.Log("PSensor:" + connect);
+            };
+
+            UsbDeviceHelper.OnUSBConnect += () =>
+            {
+                Debug.Log("USBConnect !!!");
+            };
+
+            UsbDeviceHelper.OnUSBDisConnect += () =>
+            {
+                Debug.Log("USB Disconnect !!!");
+            };
+
+            //获取USB连接状态
+            bool connect = UsbDeviceHelper.IsUSBConnect();
+
+
+
+            //
             if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
             {
                 Permission.RequestUserPermission(Permission.ExternalStorageRead);
@@ -44,10 +83,10 @@ namespace Rokid.UXR.Demo
             }
             Recenter();
             // Add listener for the 360 demo button
-            if (go360Button != null)
-            {
-                go360Button.onClick.AddListener(GoTo360DemoScene);
-            }
+            // if (go360Button != null)
+            // {
+            //     go360Button.onClick.AddListener(GoTo360DemoScene);
+            // }
             recordTxt.text = "SceneName:" + SceneManager.GetActiveScene().name;
             if (SceneManager.GetActiveScene().name == "uxr004-NormalController" && !hasStartedRecording)
             {
@@ -168,11 +207,11 @@ namespace Rokid.UXR.Demo
         }
 
         // Method to navigate to the 360 demo scene
-        private void GoTo360DemoScene()
-        {
-            Debug.Log("Navigating to Demo_360Stereo scene");
-            SceneManager.LoadScene("Demo_360Stereo");
-        }
+        // private void GoTo360DemoScene()
+        // {
+        //     Debug.Log("Navigating to Demo_360Stereo scene");
+        //     SceneManager.LoadScene("Demo_360Stereo");
+        // }
 
         private void Recenter()
         {
@@ -187,13 +226,22 @@ namespace Rokid.UXR.Demo
 
         }
 
-        // private void OnDestroy()
-        // {
-        //     StopRecording();
-        // }
+        private void OnDestroy()
+        {
+            OfflineVoiceModule.Instance.RemoveInstruct(LANGUAGE.CHINESE, "回到桌面");
+            OfflineVoiceModule.Instance.RemoveInstruct(LANGUAGE.CHINESE, "退出应用");
+            OfflineVoiceModule.Instance.Commit();
+            StopRecording();
+        }
         private void OnDisable()
         {
-            StopRecording();
+            //StopRecording();
+        }
+
+
+        void OnReceive(string msg)
+        {
+            if (string.Equals(msg, "回到桌面")) Application.Quit();
         }
     }
 }
