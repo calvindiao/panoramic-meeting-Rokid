@@ -23,9 +23,9 @@ namespace RenderHeads.Media.AVProVideo.Demos
 		{
 
             //string defaultContent = "http://192.168.5.12:18000/hls/dyasUoVNg/dyasUoVNg_live.m3u8";
-            string defaultContent = "http://192.168.5.124:18000/hls/IhSmluvNg/IhSmluvNg_live.m3u8";
+            //string defaultContent = "http://192.168.5.124:18000/hls/IhSmluvNg/IhSmluvNg_live.m3u8";
             mediaPlayer.PlatformOptionsAndroid.videoApi = Android.VideoApi.ExoPlayer;
-            mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, defaultContent, true);		  
+            //mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, defaultContent, true);		  
 
 
         }

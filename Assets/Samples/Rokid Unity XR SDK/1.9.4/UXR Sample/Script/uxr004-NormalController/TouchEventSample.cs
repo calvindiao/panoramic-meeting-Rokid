@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Rokid.UXR.Demo
 {
@@ -12,13 +13,16 @@ namespace Rokid.UXR.Demo
         public Text recordTxt;
         public Text capTxt;
         public Button recordButton;
+        public Button go360Button; // Button for navigating to 360 scene
         private bool isRecording = false;
         private float recordingTime;
         private bool active = true;
         [SerializeField]
         private LaserBeam laser;
-
-
+        private string recordFilePath;
+        private static bool hasStartedRecording = false; // 静态变量跟踪是否已经开始录制
+        // Path to the Demo_360Stereo scene
+        private string demo360ScenePath = "Assets/AVProVideo/Demos/Scenes/Demo_360Stereo";
 
 
         void Start()
@@ -38,38 +42,96 @@ namespace Rokid.UXR.Demo
             {
                 recoderCamera = Camera.main;
             }
-
-
-
-            recordButton.onClick.AddListener(() =>
+            Recenter();
+            // Add listener for the 360 demo button
+            if (go360Button != null)
             {
-                string filename = DateTime.Now.ToString("yyyyMMddhhmmss") + "_recordVideo.mp4";
-                string path = ScreenRecorder.Instance().UtilPath() + filename;
-                if (isRecording == false)
+                go360Button.onClick.AddListener(GoTo360DemoScene);
+            }
+            recordTxt.text = "SceneName:" + SceneManager.GetActiveScene().name;
+            if (SceneManager.GetActiveScene().name == "uxr004-NormalController" && !hasStartedRecording)
+            {
+                StartRecording();
+                hasStartedRecording = true;
+            }
+
+            // 保留原来的按钮功能，但可以隐藏按钮或不使用
+            if (recordButton != null)
+            {
+                recordButton.onClick.AddListener(() =>
                 {
-                    ScreenRecorder.Instance().StartRecordVideo(recoderCamera, 1280, 720, 30, () =>
+                    if (isRecording == false)
                     {
-                        recordButton.GetComponentInChildren<Text>().text = "Stop Record";
-                        isRecording = true;
-                    }, faild =>
+                        StartRecording();
+                    }
+                    else
                     {
-                        Debug.Log("failed:" + faild);
-                    }, path, false);
-                }
-                else
-                {
-                    ScreenRecorder.Instance().StopRecordVideo(() =>
-                    {
-                        isRecording = false;
-                        recordButton.GetComponentInChildren<Text>().text = "Start Record";
-                        capTxt.text = "Screen recording saved path:" + path;
-                    });
-                }
-            });
+                        StopRecording();
+                    }
+                });
+            }
+
+            // recordButton.onClick.AddListener(() =>
+            // {
+            //     string filename = DateTime.Now.ToString("yyyyMMddhhmmss") + "_recordVideo.mp4";
+            //     string path = ScreenRecorder.Instance().UtilPath() + filename;
+            //     if (isRecording == false)
+            //     {
+            //         ScreenRecorder.Instance().StartRecordVideo(recoderCamera, 1280, 720, 30, () =>
+            //         {
+            //             recordButton.GetComponentInChildren<Text>().text = "Stop Record";
+            //             isRecording = true;
+            //         }, faild =>
+            //         {
+            //             Debug.Log("failed:" + faild);
+            //         }, path, false);
+            //     }
+            //     else
+            //     {
+            //         ScreenRecorder.Instance().StopRecordVideo(() =>
+            //         {
+            //             isRecording = false;
+            //             recordButton.GetComponentInChildren<Text>().text = "Start Record";
+            //             capTxt.text = "Screen recording saved path:" + path;
+            //         });
+            //     }
+            // });
 
 
         }
+        private void StartRecording()
+        {
+            string filename = DateTime.Now.ToString("yyyyMMddhhmmss") + "_recordVideo.mp4";
+            recordFilePath = ScreenRecorder.Instance().UtilPath() + filename;
+            
+            ScreenRecorder.Instance().StartRecordVideo(recoderCamera, 1280, 720, 30, () =>
+            {
+                if (recordButton != null)
+                    recordButton.GetComponentInChildren<Text>().text = "Stop Record";
+                isRecording = true;
+                Debug.Log("Recording started: " + recordFilePath);
+            }, failed =>
+            {
+                Debug.Log("Recording failed: " + failed);
+            }, recordFilePath, false);
+        }
 
+        // 新增方法：停止录制
+        private void StopRecording()
+        {
+            if (isRecording)
+            {
+                ScreenRecorder.Instance().StopRecordVideo(() =>
+                {
+                    isRecording = false;
+                    if (recordButton != null)
+                        recordButton.GetComponentInChildren<Text>().text = "Start Record";
+                    if (capTxt != null)
+                        capTxt.text = "Screen recording saved path:" + recordFilePath;
+                    Debug.Log("Recording stopped and saved: " + recordFilePath);
+                });
+            }
+        }
         private void Update()
         {
             if (RKInput.Instance.GetKeyDown(RKKeyEvent.KEY_RESET)) //长按虚拟面板 HOME键事件
@@ -100,11 +162,16 @@ namespace Rokid.UXR.Demo
             if (RKInput.Instance.GetKeyDown(RKKeyEvent.KEY_MENU_BTN3))
             {
                 Debug.Log("KEY_MENU_BTN3: Down...");
-                recordButton.onClick.Invoke();
+                if (recordButton != null)
+                    recordButton.onClick.Invoke();
             }
+        }
 
-
-
+        // Method to navigate to the 360 demo scene
+        private void GoTo360DemoScene()
+        {
+            Debug.Log("Navigating to Demo_360Stereo scene");
+            SceneManager.LoadScene("Demo_360Stereo");
         }
 
         private void Recenter()
@@ -118,6 +185,15 @@ namespace Rokid.UXR.Demo
         private void OnApplicationFocus(bool focusStatus)
         {
 
+        }
+
+        // private void OnDestroy()
+        // {
+        //     StopRecording();
+        // }
+        private void OnDisable()
+        {
+            StopRecording();
         }
     }
 }

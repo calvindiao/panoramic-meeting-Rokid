@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 638c870cac4da414fba921606d504407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mediaSource: 1
+  _mediaSource: 0
   _mediaReference: {fileID: 11400000, guid: 0d696b76d81c0e640a7dbcc2d148b9ec, type: 2}
   _mediaPath:
     _pathType: 0
