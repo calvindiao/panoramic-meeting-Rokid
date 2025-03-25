@@ -35,6 +35,18 @@ namespace Rokid.UXR.Demo
 
             KeycodeInputModule.Instance.Initialized();
 
+            if (LogManager.Instance == null)
+            {
+                GameObject logManagerObj = new GameObject("LogManager");
+                logManagerObj.AddComponent<LogManager>();
+            }
+            
+            LogManager.Instance.Log("应用启动");
+
+
+
+
+
             OfflineVoiceModule.Instance.AddInstruct(LANGUAGE.CHINESE, "回到桌面", "hui dao zhuo mian", gameObject.name, "OnReceive");
             OfflineVoiceModule.Instance.AddInstruct(LANGUAGE.CHINESE, "退出应用", "tui chu yin yong", gameObject.name, "OnReceive");
             OfflineVoiceModule.Instance.Commit();
