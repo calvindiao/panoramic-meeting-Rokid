@@ -24,6 +24,15 @@ namespace Rokid.UXR.Demo
         // Path to the Demo_360Stereo scene
         private string demo360ScenePath = "Assets/AVProVideo/Demos/Scenes/Demo_360Stereo";
 
+        public GameObject worldCanvas;
+        
+        // 添加控制WorldCanvas的按钮引用
+        public Button toggleCanvasButton;
+        
+        // 添加一个变量跟踪WorldCanvas的显示状态
+        private bool isWorldCanvasVisible = true;
+
+
 
         void Start()
         {
@@ -121,7 +130,8 @@ namespace Rokid.UXR.Demo
                     }
                 });
             }
-
+            worldCanvas.SetActive(false);
+            toggleCanvasButton.onClick.AddListener(ToggleWorldCanvas);
             // recordButton.onClick.AddListener(() =>
             // {
             //     string filename = DateTime.Now.ToString("yyyyMMddhhmmss") + "_recordVideo.mp4";
@@ -149,6 +159,16 @@ namespace Rokid.UXR.Demo
             // });
 
 
+        }
+        public void ToggleWorldCanvas()
+        {
+            if (worldCanvas != null)
+            {
+                isWorldCanvasVisible = !isWorldCanvasVisible;
+                worldCanvas.SetActive(isWorldCanvasVisible);
+                
+                Debug.Log("WorldCanvas visibility: " + (isWorldCanvasVisible ? "Visible" : "Hidden"));
+            }
         }
         private void StartRecording()
         {
