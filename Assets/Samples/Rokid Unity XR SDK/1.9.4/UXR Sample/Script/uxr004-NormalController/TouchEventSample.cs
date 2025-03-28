@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using RenderHeads.Media.AVProVideo.Demos; // 添加引用以访问LookAround360
+using RenderHeads.Media.AVProVideo; // 添加引用以访问MediaPlayer
 
 namespace Rokid.UXR.Demo
 {
@@ -13,7 +15,6 @@ namespace Rokid.UXR.Demo
         public Text recordTxt;
         public Text capTxt;
         public Button recordButton;
-        public Button go360Button; // Button for navigating to 360 scene
         private bool isRecording = false;
         private float recordingTime;
         private bool active = true;
@@ -21,8 +22,6 @@ namespace Rokid.UXR.Demo
         private LaserBeam laser;
         private string recordFilePath;
         private static bool hasStartedRecording = false; // 静态变量跟踪是否已经开始录制
-        // Path to the Demo_360Stereo scene
-        private string demo360ScenePath = "Assets/AVProVideo/Demos/Scenes/Demo_360Stereo";
 
         public GameObject worldCanvas;
         
@@ -32,11 +31,16 @@ namespace Rokid.UXR.Demo
         // 添加一个变量跟踪WorldCanvas的显示状态
         private bool isWorldCanvasVisible = true;
 
-
+        // 添加媒体播放器相关引用
+        public LookAround360 lookAround360Controller;
+        public Button toggleMediaButton;
+        public GameObject mediaSphere; // 视频播放的球体
+        
+        // 跟踪媒体播放状态
+        private bool isMediaPlaying = false;
 
         void Start()
         {
-
             if (Application.platform == RuntimePlatform.Android)
             {
                 Google.XR.Cardboard.Api.UpdateScreenParams();
@@ -51,10 +55,6 @@ namespace Rokid.UXR.Demo
             }
             
             LogManager.Instance.Log("应用启动");
-
-
-
-
 
             OfflineVoiceModule.Instance.AddInstruct(LANGUAGE.CHINESE, "回到桌面", "hui dao zhuo mian", gameObject.name, "OnReceive");
             OfflineVoiceModule.Instance.AddInstruct(LANGUAGE.CHINESE, "退出应用", "tui chu yin yong", gameObject.name, "OnReceive");
@@ -84,8 +84,6 @@ namespace Rokid.UXR.Demo
             //获取USB连接状态
             bool connect = UsbDeviceHelper.IsUSBConnect();
 
-
-
             //
             if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
             {
@@ -103,11 +101,7 @@ namespace Rokid.UXR.Demo
                 recoderCamera = Camera.main;
             }
             Recenter();
-            // Add listener for the 360 demo button
-            // if (go360Button != null)
-            // {
-            //     go360Button.onClick.AddListener(GoTo360DemoScene);
-            // }
+
             recordTxt.text = "SceneName:" + SceneManager.GetActiveScene().name;
             if (SceneManager.GetActiveScene().name == "uxr004-NormalController" && !hasStartedRecording)
             {
@@ -132,32 +126,42 @@ namespace Rokid.UXR.Demo
             }
             worldCanvas.SetActive(false);
             toggleCanvasButton.onClick.AddListener(ToggleWorldCanvas);
-            // recordButton.onClick.AddListener(() =>
-            // {
-            //     string filename = DateTime.Now.ToString("yyyyMMddhhmmss") + "_recordVideo.mp4";
-            //     string path = ScreenRecorder.Instance().UtilPath() + filename;
-            //     if (isRecording == false)
-            //     {
-            //         ScreenRecorder.Instance().StartRecordVideo(recoderCamera, 1280, 720, 30, () =>
-            //         {
-            //             recordButton.GetComponentInChildren<Text>().text = "Stop Record";
-            //             isRecording = true;
-            //         }, faild =>
-            //         {
-            //             Debug.Log("failed:" + faild);
-            //         }, path, false);
-            //     }
-            //     else
-            //     {
-            //         ScreenRecorder.Instance().StopRecordVideo(() =>
-            //         {
-            //             isRecording = false;
-            //             recordButton.GetComponentInChildren<Text>().text = "Start Record";
-            //             capTxt.text = "Screen recording saved path:" + path;
-            //         });
-            //     }
-            // });
 
+
+            // 如果没有在Inspector中设置引用，尝试查找
+            if (lookAround360Controller == null)
+            {
+                lookAround360Controller = FindObjectOfType<LookAround360>();
+                if (lookAround360Controller == null)
+                {
+                    Debug.LogError("LookAround360 controller not found in the scene!");
+                }
+            }
+            
+            // if (mediaSphere == null && lookAround360Controller != null)
+            // {
+            //     // 尝试找到媒体球体 - 通常是LookAround360所在的GameObject或其子对象
+            //     mediaSphere = lookAround360Controller.gameObject;
+            // }
+            
+            // 设置媒体播放按钮事件
+            if (toggleMediaButton != null)
+            {
+                toggleMediaButton.onClick.AddListener(ToggleMediaPlayback);
+                
+                // 更新按钮文本初始状态
+                Text buttonText = toggleMediaButton.GetComponentInChildren<Text>();
+                if (buttonText != null)
+                {
+                    buttonText.text = "Play Media";
+                }
+            }
+            
+            // 初始状态 - 媒体球体隐藏
+            if (mediaSphere != null)
+            {
+                mediaSphere.SetActive(false);
+            }
 
         }
         public void ToggleWorldCanvas()
@@ -270,6 +274,64 @@ namespace Rokid.UXR.Demo
             //StopRecording();
         }
 
+        // 添加切换媒体播放/暂停的方法
+        public void ToggleMediaPlayback()
+        {
+            if (lookAround360Controller == null || lookAround360Controller.mediaPlayer == null)
+            {
+                Debug.LogError("Media player reference not set!");
+                return;
+            }
+            
+            isMediaPlaying = !isMediaPlaying;
+            
+            if (isMediaPlaying)
+            {
+                // 显示媒体球体
+                if (mediaSphere != null)
+                {
+                    mediaSphere.SetActive(true);
+                }
+                
+                // 开始播放媒体
+                lookAround360Controller.PlayMedia();
+                
+                // 更新按钮文本
+                if (toggleMediaButton != null)
+                {
+                    Text buttonText = toggleMediaButton.GetComponentInChildren<Text>();
+                    if (buttonText != null)
+                    {
+                        buttonText.text = "Stop Media";
+                    }
+                }
+                
+                Debug.Log("Media playback started");
+            }
+            else
+            {
+                // 停止播放媒体
+                lookAround360Controller.StopMedia();
+                
+                //隐藏媒体球体
+                if (mediaSphere != null)
+                {
+                    mediaSphere.SetActive(false);
+                }
+                
+                // 更新按钮文本
+                if (toggleMediaButton != null)
+                {
+                    Text buttonText = toggleMediaButton.GetComponentInChildren<Text>();
+                    if (buttonText != null)
+                    {
+                        buttonText.text = "Play Media";
+                    }
+                }
+                
+                Debug.Log("Media playback stopped");
+            }
+        }
 
         void OnReceive(string msg)
         {

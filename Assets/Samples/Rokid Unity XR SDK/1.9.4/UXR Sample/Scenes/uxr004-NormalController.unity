@@ -625,10 +625,12 @@ MonoBehaviour:
   recordTxt: {fileID: 598176910}
   capTxt: {fileID: 0}
   recordButton: {fileID: 1724417584}
-  go360Button: {fileID: 356225755}
   laser: {fileID: 99724208}
   worldCanvas: {fileID: 0}
   toggleCanvasButton: {fileID: 0}
+  lookAround360Controller: {fileID: 0}
+  toggleMediaButton: {fileID: 0}
+  mediaSphere: {fileID: 0}
 --- !u!4 &361059501
 Transform:
   m_ObjectHideFlags: 0
@@ -1503,10 +1505,12 @@ MonoBehaviour:
   recordTxt: {fileID: 598176910}
   capTxt: {fileID: 0}
   recordButton: {fileID: 1724417584}
-  go360Button: {fileID: 356225755}
   laser: {fileID: 99724208}
   worldCanvas: {fileID: 0}
   toggleCanvasButton: {fileID: 0}
+  lookAround360Controller: {fileID: 0}
+  toggleMediaButton: {fileID: 0}
+  mediaSphere: {fileID: 0}
 --- !u!114 &797404935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4170,7 +4174,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -4234,10 +4238,12 @@ MonoBehaviour:
   recordTxt: {fileID: 598176910}
   capTxt: {fileID: 0}
   recordButton: {fileID: 1724417584}
-  go360Button: {fileID: 356225755}
   laser: {fileID: 99724208}
   worldCanvas: {fileID: 1780770205}
   toggleCanvasButton: {fileID: 1112730948}
+  lookAround360Controller: {fileID: 1937578674}
+  toggleMediaButton: {fileID: 356225755}
+  mediaSphere: {fileID: 842896231}
 --- !u!114 &1937578679
 MonoBehaviour:
   m_ObjectHideFlags: 0
