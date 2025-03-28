@@ -38,6 +38,7 @@ namespace Rokid.UXR.Demo
         
         // 跟踪媒体播放状态
         private bool isMediaPlaying = false;
+        private bool isMediaPreloaded = false;
 
         void Start()
         {
@@ -161,6 +162,12 @@ namespace Rokid.UXR.Demo
             if (mediaSphere != null)
             {
                 mediaSphere.SetActive(false);
+            }
+
+            // 预加载媒体但不开始播放
+            if (lookAround360Controller != null && lookAround360Controller.mediaPlayer != null)
+            {
+                PreloadMedia();
             }
 
         }
@@ -294,7 +301,15 @@ namespace Rokid.UXR.Demo
                 }
                 
                 // 开始播放媒体
-                lookAround360Controller.PlayMedia();
+                if (isMediaPreloaded)
+                {
+                    lookAround360Controller.ResumeMedia();
+                }
+                else
+                {
+                    lookAround360Controller.PlayMedia();
+                    isMediaPreloaded = true;
+                }
                 
                 // 更新按钮文本
                 if (toggleMediaButton != null)
@@ -310,8 +325,8 @@ namespace Rokid.UXR.Demo
             }
             else
             {
-                // 停止播放媒体
-                lookAround360Controller.StopMedia();
+                // 停止播放媒体，但保持连接
+                lookAround360Controller.PauseMedia();
                 
                 //隐藏媒体球体
                 if (mediaSphere != null)
@@ -331,6 +346,20 @@ namespace Rokid.UXR.Demo
                 
                 Debug.Log("Media playback stopped");
             }
+        }
+
+        // 添加预加载媒体的方法
+        private void PreloadMedia()
+        {
+            if (lookAround360Controller == null || lookAround360Controller.mediaPlayer == null)
+            {
+                Debug.LogError("Media player reference not set!");
+                return;
+            }
+            
+            Debug.Log("Preloading media connection...");
+            lookAround360Controller.PreloadMedia();
+            isMediaPreloaded = true;
         }
 
         void OnReceive(string msg)

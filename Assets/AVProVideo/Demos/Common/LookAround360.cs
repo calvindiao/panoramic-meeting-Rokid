@@ -26,6 +26,9 @@ namespace RenderHeads.Media.AVProVideo.Demos
 		// 添加ApplyToMesh引用，用于控制材质
 		private ApplyToMesh applyToMesh;
 
+		// 添加预加载标志
+		private bool isMediaPreloaded = false;
+
 		void Start()
 		{
 			// 获取ApplyToMesh组件
@@ -50,23 +53,54 @@ namespace RenderHeads.Media.AVProVideo.Demos
 			}
 		}
 		
+		// 预加载媒体但不播放
+		public void PreloadMedia()
+		{
+			if (mediaPlayer != null)
+			{
+				// 打开媒体但不自动播放
+				mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, mediaUrl, false);
+				isMediaPreloaded = true;
+				Debug.Log("Media preloaded: " + mediaUrl);
+			}
+		}
+		
 		// 开始播放媒体
 		public void PlayMedia()
 		{
 			if (mediaPlayer != null)
 			{
-				mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, mediaUrl, true);
-				
-				// 确保球体可见
-				//gameObject.SetActive(true);
-				
-				// 启用ApplyToMesh组件
-				// if (applyToMesh != null)
-				// {
-				// 	applyToMesh.enabled = true;
-				// }
+				if (!isMediaPreloaded)
+				{
+					mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, mediaUrl, true);
+					isMediaPreloaded = true;
+				}
+				else
+				{
+					mediaPlayer.Play();
+				}
 				
 				Debug.Log("Media playback started: " + mediaUrl);
+			}
+		}
+		
+		// 恢复已加载的媒体播放
+		public void ResumeMedia()
+		{
+			if (mediaPlayer != null)
+			{
+				mediaPlayer.Play();
+				Debug.Log("Media playback resumed");
+			}
+		}
+		
+		// 暂停播放但保持连接
+		public void PauseMedia()
+		{
+			if (mediaPlayer != null)
+			{
+				mediaPlayer.Pause();
+				Debug.Log("Media playback paused");
 			}
 		}
 		
@@ -76,6 +110,7 @@ namespace RenderHeads.Media.AVProVideo.Demos
 			if (mediaPlayer != null)
 			{
 				mediaPlayer.CloseMedia();
+				isMediaPreloaded = false;
 				
 				// 禁用ApplyToMesh组件
 				// if (applyToMesh != null)

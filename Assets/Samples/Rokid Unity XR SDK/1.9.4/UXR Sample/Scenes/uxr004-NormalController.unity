@@ -4450,7 +4450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mediaSource: 0
-  _mediaReference: {fileID: 11400000, guid: 0d696b76d81c0e640a7dbcc2d148b9ec, type: 2}
+  _mediaReference: {fileID: 0}
   _mediaPath:
     _pathType: 0
     _path: http://192.168.5.124:18000/hls/IhSmluvNg/IhSmluvNg_live.m3u8
