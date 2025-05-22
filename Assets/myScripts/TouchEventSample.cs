@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using RenderHeads.Media.AVProVideo.Demos; // 添加引用以访问LookAround360
 using RenderHeads.Media.AVProVideo; // 添加引用以访问MediaPlayer
-
+using Rokid.UXR.Demo;
 namespace Rokid.UXR.Demo
 {
     public class TouchEventSample : MonoBehaviour
