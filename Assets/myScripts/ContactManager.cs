@@ -35,7 +35,7 @@ namespace Rokid.UXR.Demo
         private IEnumerator LoadContactsFromStreamingAssets()
         {
             // 使用正确的路径，包含AVProVideoSamples子文件夹
-            string sourcePath = Path.Combine(Application.streamingAssetsPath, "AVProVideoSamples", "contacts.json");
+            string sourcePath = Path.Combine(Application.streamingAssetsPath, "Contacts", "contacts.json");
             Debug.Log("尝试读取联系人文件路径：" + sourcePath);
             
             UnityWebRequest www = UnityWebRequest.Get(sourcePath);
