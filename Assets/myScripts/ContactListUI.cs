@@ -13,7 +13,7 @@ namespace Rokid.UXR.Demo
         [SerializeField] private Transform contentParent;   // ScrollView/Content
         [SerializeField] private Button buttonPrefab;       // ContactButton prefab
         [SerializeField] private LookAround360 lookAround;  // 你的播放器控制脚本（可选）
-
+        [SerializeField] private TouchEventSample touchEventSample;   // 新增：主控制脚本引用
         private IEnumerator Start()
         {
             Debug.Log("▶ ContactListUI Start running");
@@ -23,6 +23,7 @@ namespace Rokid.UXR.Demo
 
             PopulateButtons();
         }
+
 
         private void PopulateButtons()
         {
@@ -43,17 +44,19 @@ namespace Rokid.UXR.Demo
                 // 3. 绑定点击事件
                 btn.onClick.AddListener(() =>
                 {
+
                     Debug.Log($"点击联系人：{c.name}，URL：{c.streamUrl}");
 
-                    // 如果你想播放流：
-                    if (lookAround != null)
+                    if (touchEventSample != null)
                     {
-                        // lookAround.SetUrl(c.streamUrl);  // 之前给 LookAround360 加过这个接口
-                        // lookAround.PlayMedia();
+                        // 统一通过 TouchEventSample 来处理播放 & 可见性
+                        touchEventSample.PlayMediaFromUrl(c.streamUrl);
                         Debug.Log("播放流："+c.streamUrl);
                     }
                 });
             }
         }
+        
     }
 }
+

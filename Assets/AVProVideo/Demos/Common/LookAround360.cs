@@ -17,7 +17,7 @@ namespace RenderHeads.Media.AVProVideo.Demos
 		public MediaPlayer mediaPlayer;
 		
 		// 要播放的媒体URL
-		private string mediaUrl = "http://192.168.5.22:18000/hls/Y5jQyJTNg/Y5jQyJTNg_live.m3u8";
+		private string mediaUrl = "http://192.168.5.20:18000/hls/tqS5rMLNRz/tqS5rMLNRz_live.m3u8";
 		
 		
 		// 是否在启动时自动播放
@@ -59,9 +59,9 @@ namespace RenderHeads.Media.AVProVideo.Demos
 			if (mediaPlayer != null)
 			{
 				// 打开媒体但不自动播放
-				mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, mediaUrl, false);
-				isMediaPreloaded = true;
-				Debug.Log("Media preloaded: " + mediaUrl);
+				// mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, mediaUrl, false);
+				// isMediaPreloaded = true;
+				Debug.Log("Calvin_Not Execute!!! Media preloaded: " + mediaUrl);
 			}
 		}
 		
@@ -120,6 +120,12 @@ namespace RenderHeads.Media.AVProVideo.Demos
 				
 				Debug.Log("Media playback stopped");
 			}
+		}
+
+		public void SetUrl(string url)
+		{
+			mediaUrl = url;
+			Debug.Log("Calvin_SetMediaUrl: " + mediaUrl);
 		}
 
 		void Update()

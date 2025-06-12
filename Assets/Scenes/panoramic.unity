@@ -4181,6 +4181,7 @@ MonoBehaviour:
   contentParent: {fileID: 783756873}
   buttonPrefab: {fileID: 6115465411187546467, guid: 07e19c02b2597b6469832197df5a38ff, type: 3}
   lookAround: {fileID: 1937578674}
+  touchEventSample: {fileID: 1937578678}
 --- !u!1 &2004499921
 GameObject:
   m_ObjectHideFlags: 0
@@ -4720,6 +4721,10 @@ PrefabInstance:
       propertyPath: logText
       value: 
       objectReference: {fileID: 598176910}
+    - target: {fileID: 6115465411187546460, guid: 07e19c02b2597b6469832197df5a38ff, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6115465411187546461, guid: 07e19c02b2597b6469832197df5a38ff, type: 3}
       propertyPath: m_Pivot.x
       value: 0

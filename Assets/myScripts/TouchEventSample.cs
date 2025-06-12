@@ -348,6 +348,36 @@ namespace Rokid.UXR.Demo
             }
         }
 
+
+        // 供联系人按钮直接调用：设置 URL → 播放 → 更新可见性与 UI
+        public void PlayMediaFromUrl(string url)
+        {
+            if (lookAround360Controller == null || lookAround360Controller.mediaPlayer == null)
+            {
+                Debug.LogError("PlayMediaFromUrl::Media player reference not set!");
+                return;
+            }
+
+            // 1. 设置地址并播放
+            lookAround360Controller.SetUrl(url);
+            lookAround360Controller.PlayMedia();
+
+            // 2. 确保 360 球体可见
+            if (mediaSphere != null)
+            {
+                mediaSphere.SetActive(true);
+            }
+
+
+            // 4. 更新本脚本状态
+            isMediaPlaying   = true;
+            isMediaPreloaded = true;
+
+            Debug.Log("▶ PlayMediaFromUrl: " + url);
+        }
+
+
+
         // 添加预加载媒体的方法
         private void PreloadMedia()
         {
