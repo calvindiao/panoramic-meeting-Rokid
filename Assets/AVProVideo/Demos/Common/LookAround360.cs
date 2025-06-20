@@ -73,7 +73,7 @@ namespace RenderHeads.Media.AVProVideo.Demos
 				if (!isMediaPreloaded)
 				{
 					mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, mediaUrl, true);
-					isMediaPreloaded = true;
+					//isMediaPreloaded = true;
 				}
 				else
 				{

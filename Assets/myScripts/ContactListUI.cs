@@ -50,7 +50,7 @@ namespace Rokid.UXR.Demo
                     if (touchEventSample != null)
                     {
                         // 统一通过 TouchEventSample 来处理播放 & 可见性
-                        touchEventSample.PlayMediaFromUrl(c.streamUrl);
+                        touchEventSample.PlayMediaFromUrl(c.name , c.streamUrl);
                         Debug.Log("播放流："+c.streamUrl);
                     }
                 });
