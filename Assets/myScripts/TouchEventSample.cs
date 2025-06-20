@@ -214,11 +214,11 @@ namespace Rokid.UXR.Demo
                 Recenter();
             }
 
-            if (isRecording)
-            {
-                recordingTime += Time.unscaledDeltaTime;
-                recordTxt.text = string.Format("Recording  :{0}", recordingTime.ToString("0.0"));
-            }
+            // if (isRecording)
+            // {
+            //     recordingTime += Time.unscaledDeltaTime;
+            //     recordTxt.text = string.Format("Recording  :{0}", recordingTime.ToString("0.0"));
+            // }
             else
             {
                 recordingTime = 0;
@@ -342,7 +342,7 @@ namespace Rokid.UXR.Demo
                 nameInputField.text = name;
                 urlInputField.text = url;
             }
-            recordTxt.text = "Calling:"+"name: " + name + " url: " + url;
+            recordTxt.text = "Calling:" + name + " " + url;
             // 1. 设置地址并播放
             lookAround360Controller.SetUrl(url);
 
