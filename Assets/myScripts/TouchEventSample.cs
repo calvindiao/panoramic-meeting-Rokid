@@ -16,7 +16,7 @@ namespace Rokid.UXR.Demo
         public Button recordButton;
         public Button addButton;
         public Button displayButton;
-        
+
         [SerializeField] private InputField nameInputField;
         [SerializeField] private InputField urlInputField;
 
@@ -30,10 +30,10 @@ namespace Rokid.UXR.Demo
         private string recordFilePath;
 
         public GameObject worldCanvas;
-        
+
         // 添加控制WorldCanvas的按钮引用
 
-        
+
         // 添加一个变量跟踪WorldCanvas的显示状态
         private bool isWorldCanvasVisible = true;
 
@@ -63,7 +63,7 @@ namespace Rokid.UXR.Demo
                 Debug.Log("LogManagerObj: " + logManagerObj);
                 logManagerObj.AddComponent<LogManager>();
             }
-            
+
             LogManager.Instance.Log("launch app");
 
             OfflineVoiceModule.Instance.AddInstruct(LANGUAGE.CHINESE, "回到桌面", "hui dao zhuo mian", gameObject.name, "OnReceive");
@@ -133,7 +133,8 @@ namespace Rokid.UXR.Demo
             }
             worldCanvas.SetActive(true);
             displayButton.onClick.AddListener(ToggleWorldCanvas);
-
+            if (addButton != null)
+                addButton.onClick.AddListener(OnAddContactClicked);
             if (lookAround360Controller == null)
             {
                 lookAround360Controller = FindObjectOfType<LookAround360>();
@@ -142,14 +143,14 @@ namespace Rokid.UXR.Demo
                     Debug.LogError("LookAround360 controller not found in the scene!");
                 }
             }
-            
 
-            
+
+
             // 设置媒体播放按钮事件
             // if (toggleMediaButton != null)
             // {
             //     toggleMediaButton.onClick.AddListener(ToggleMediaPlayback);
-                
+
             //     // 更新按钮文本初始状态
             //     Text buttonText = toggleMediaButton.GetComponentInChildren<Text>();
             //     if (buttonText != null)
@@ -157,7 +158,7 @@ namespace Rokid.UXR.Demo
             //         buttonText.text = "Play Media";
             //     }
             // }
-            
+
 
             if (mediaSphere != null)
             {
@@ -177,7 +178,7 @@ namespace Rokid.UXR.Demo
             {
                 isWorldCanvasVisible = !isWorldCanvasVisible;
                 worldCanvas.SetActive(isWorldCanvasVisible);
-                
+
                 Debug.Log("WorldCanvas visibility: " + (isWorldCanvasVisible ? "Visible" : "Hidden"));
             }
         }
@@ -185,7 +186,7 @@ namespace Rokid.UXR.Demo
         {
             string filename = DateTime.Now.ToString("yyyyMMddhhmmss") + "_recordVideo.mp4";
             recordFilePath = ScreenRecorder.Instance().UtilPath() + filename;
-            
+
             ScreenRecorder.Instance().StartRecordVideo(recoderCamera, 1280, 720, 30, () =>
             {
                 if (recordButton != null)
@@ -373,7 +374,7 @@ namespace Rokid.UXR.Demo
                 Debug.LogError("Media player reference not set!");
                 return;
             }
-            
+
             Debug.Log("Preloading media connection...");
             lookAround360Controller.PreloadMedia();
             isMediaPreloaded = true;
@@ -383,6 +384,28 @@ namespace Rokid.UXR.Demo
         {
             if (string.Equals(msg, "回到桌面")) Application.Quit();
         }
+
+        private void OnAddContactClicked()
+        {
+            if (ContactManager.Instance == null)
+            {
+                Debug.LogError("ContactManager not ready.");
+                return;
+            }
+
+            if (nameInputField == null || urlInputField == null)
+            {
+                Debug.LogError("Input fields not assigned.");
+                return;
+            }
+
+            if (ContactManager.Instance.TryAddContact(nameInputField.text, urlInputField.text))
+            {
+                Debug.Log("Add contact succeeded.");
+            }
+        }
+
+
     }
 }
 

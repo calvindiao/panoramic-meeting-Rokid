@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 188752777}
   - component: {fileID: 188752776}
   m_Layer: 5
-  m_Name: controlButton
+  m_Name: addButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4372,13 +4372,14 @@ MonoBehaviour:
   recoderCamera: {fileID: 1937578676}
   recordTxt: {fileID: 598176910}
   recordButton: {fileID: 1724417584}
-  laser: {fileID: 99724208}
-  worldCanvas: {fileID: 890615556}
+  addButton: {fileID: 188752778}
   displayButton: {fileID: 1526588141}
-  lookAround360Controller: {fileID: 1937578674}
-  mediaSphere: {fileID: 842896231}
   nameInputField: {fileID: 1340924521}
   urlInputField: {fileID: 508761698}
+  laser: {fileID: 99724208}
+  worldCanvas: {fileID: 890615556}
+  lookAround360Controller: {fileID: 1937578674}
+  mediaSphere: {fileID: 842896231}
 --- !u!114 &1937578679
 MonoBehaviour:
   m_ObjectHideFlags: 0

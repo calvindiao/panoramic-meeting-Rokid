@@ -14,9 +14,24 @@ namespace Rokid.UXR.Demo
         [SerializeField] private Button buttonPrefab;       // ContactButton prefab
         [SerializeField] private LookAround360 lookAround;  // 你的播放器控制脚本（可选）
         [SerializeField] private TouchEventSample touchEventSample;   // 新增：主控制脚本引用
+
+        private void OnEnable()
+        {
+            if (ContactManager.Instance != null)
+                ContactManager.Instance.ContactsUpdated += PopulateButtons;
+        }
+
+        private void OnDisable()
+        {
+            if (ContactManager.Instance != null)
+                ContactManager.Instance.ContactsUpdated -= PopulateButtons;
+        }
+
+
+
         private IEnumerator Start()
         {
-            Debug.Log("▶ ContactListUI Start running");
+            Debug.Log(" ContactListUI Start running");
             // 等待 ContactManager 完成加载
             while (ContactManager.Instance == null || ContactManager.Instance.Contacts.Count == 0)
                 yield return null;
@@ -27,7 +42,7 @@ namespace Rokid.UXR.Demo
 
         private void PopulateButtons()
         {
-            Debug.Log($"▶ PopulateButtons, contact count = {ContactManager.Instance.Contacts.Count}");
+            Debug.Log($" PopulateButtons, contact count = {ContactManager.Instance.Contacts.Count}");
             // 先清空旧的（编辑器里留的、或刷新用）
             foreach (Transform child in contentParent) Destroy(child.gameObject);
 
@@ -45,18 +60,18 @@ namespace Rokid.UXR.Demo
                 btn.onClick.AddListener(() =>
                 {
 
-                    Debug.Log($"点击联系人：{c.name}，URL：{c.streamUrl}");
+                    Debug.Log($"Calling {c.name} url {c.streamUrl}");
 
                     if (touchEventSample != null)
                     {
                         // 统一通过 TouchEventSample 来处理播放 & 可见性
-                        touchEventSample.PlayMediaFromUrl(c.name , c.streamUrl);
-                        Debug.Log("播放流："+c.streamUrl);
+                        touchEventSample.PlayMediaFromUrl(c.name, c.streamUrl);
+                        Debug.Log("Playing stream: " + c.streamUrl);
                     }
                 });
             }
         }
-        
+
     }
 }
 
