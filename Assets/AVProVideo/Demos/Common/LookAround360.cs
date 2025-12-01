@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 //-----------------------------------------------------------------------------
@@ -16,28 +16,17 @@ namespace RenderHeads.Media.AVProVideo.Demos
 	{
 		public MediaPlayer mediaPlayer;
 		
-		// 要播放的媒体URL
+		// URL of the media to play
 		private string mediaUrl = "http://192.168.5.20:18000/hls/tqS5rMLNRz/tqS5rMLNRz_live.m3u8";
-		
-		
-		// 是否在启动时自动播放
 		private bool autoPlayOnStart = false;
-		
-		// 添加ApplyToMesh引用，用于控制材质
 		private ApplyToMesh applyToMesh;
-
-		// 添加预加载标志
+		// Add preload flag
 		private bool isMediaPreloaded = false;
-
 		void Start()
 		{
-			// 获取ApplyToMesh组件
 			//applyToMesh = GetComponent<ApplyToMesh>();
-			
-			// 设置Android平台选项
 			mediaPlayer.PlatformOptionsAndroid.videoApi = Android.VideoApi.ExoPlayer;
 			
-			// 如果设置了自动播放，则开始播放
 			if (autoPlayOnStart)
 			{
 				PlayMedia();
@@ -53,19 +42,16 @@ namespace RenderHeads.Media.AVProVideo.Demos
 			}
 		}
 		
-		// 预加载媒体但不播放
 		public void PreloadMedia()
 		{
 			if (mediaPlayer != null)
 			{
-				// 打开媒体但不自动播放
 				// mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, mediaUrl, false);
 				// isMediaPreloaded = true;
 				Debug.Log("Calvin_Not Execute!!! Media preloaded: " + mediaUrl);
 			}
 		}
 		
-		// 开始播放媒体
 		public void PlayMedia()
 		{
 			if (mediaPlayer != null)
@@ -83,8 +69,6 @@ namespace RenderHeads.Media.AVProVideo.Demos
 				Debug.Log("Media playback started: " + mediaUrl);
 			}
 		}
-		
-		// 恢复已加载的媒体播放
 		public void ResumeMedia()
 		{
 			if (mediaPlayer != null)
@@ -93,8 +77,6 @@ namespace RenderHeads.Media.AVProVideo.Demos
 				Debug.Log("Media playback resumed");
 			}
 		}
-		
-		// 暂停播放但保持连接
 		public void PauseMedia()
 		{
 			if (mediaPlayer != null)
@@ -103,8 +85,6 @@ namespace RenderHeads.Media.AVProVideo.Demos
 				Debug.Log("Media playback paused");
 			}
 		}
-		
-		// 停止播放媒体
 		public void StopMedia()
 		{
 			if (mediaPlayer != null)

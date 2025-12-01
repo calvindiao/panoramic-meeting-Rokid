@@ -267,9 +267,9 @@ namespace Rokid.UXR.Demo
         //         Debug.LogError("Media player reference not set!");
         //         return;
         //     }
-            
+
         //     isMediaPlaying = !isMediaPlaying;
-            
+
         //     if (isMediaPlaying)
         //     {
         //         // 显示媒体球体
@@ -277,7 +277,7 @@ namespace Rokid.UXR.Demo
         //         {
         //             mediaSphere.SetActive(true);
         //         }
-                
+
         //         // 开始播放媒体
         //         if (isMediaPreloaded)
         //         {
@@ -288,7 +288,7 @@ namespace Rokid.UXR.Demo
         //             lookAround360Controller.PlayMedia();
         //             isMediaPreloaded = true;
         //         }
-                
+
         //         // 更新按钮文本
         //         if (toggleMediaButton != null)
         //         {
@@ -298,20 +298,20 @@ namespace Rokid.UXR.Demo
         //                 buttonText.text = "Stop Media";
         //             }
         //         }
-                
+
         //         Debug.Log("Media playback started");
         //     }
         //     else
         //     {
         //         // 停止播放媒体，但保持连接
         //         lookAround360Controller.PauseMedia();
-                
+
         //         //隐藏媒体球体
         //         if (mediaSphere != null)
         //         {
         //             mediaSphere.SetActive(false);
         //         }
-                
+
         //         // 更新按钮文本
         //         if (toggleMediaButton != null)
         //         {
@@ -321,7 +321,7 @@ namespace Rokid.UXR.Demo
         //                 buttonText.text = "Play Media";
         //             }
         //         }
-                
+
         //         Debug.Log("Media playback stopped");
         //     }
         // }
@@ -335,9 +335,9 @@ namespace Rokid.UXR.Demo
                 Debug.LogError("PlayMediaFromUrl::Media player reference not set!");
                 return;
             }
-            
 
-            if (nameInputField != null&&urlInputField != null)
+
+            if (nameInputField != null && urlInputField != null)
             {
                 nameInputField.text = name;
                 urlInputField.text = url;
@@ -356,7 +356,7 @@ namespace Rokid.UXR.Demo
 
             ToggleWorldCanvas();
 
-            isMediaPlaying   = true;
+            isMediaPlaying = true;
             // isMediaPreloaded = true;
 
             Debug.Log("▶ PlayMediaFromUrl: " + url);

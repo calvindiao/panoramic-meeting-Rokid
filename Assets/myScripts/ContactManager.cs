@@ -28,15 +28,15 @@ namespace Rokid.UXR.Demo
         {
             if (Instance == null) { Instance = this; DontDestroyOnLoad(gameObject); }
             else { Destroy(gameObject); return; }
-            Debug.Log("首次运行contactmanager");
+            Debug.Log("Run contactmanager");
             StartCoroutine(LoadContactsFromStreamingAssets());
         }
 
         private IEnumerator LoadContactsFromStreamingAssets()
         {
-            // 使用正确的路径，包含AVProVideoSamples子文件夹
+
             string sourcePath = Path.Combine(Application.streamingAssetsPath, "Contacts", "contacts.json");
-            Debug.Log("尝试读取联系人文件路径：" + sourcePath);
+            Debug.Log("Try to read the contacts file path:" + sourcePath);
             
             UnityWebRequest www = UnityWebRequest.Get(sourcePath);
             yield return www.SendWebRequest();
@@ -44,31 +44,30 @@ namespace Rokid.UXR.Demo
             if (www.result == UnityWebRequest.Result.Success)
             {
                 string json = www.downloadHandler.text;
-                Debug.Log("成功读取JSON内容：" + json);
+                Debug.Log("Successfully read JSON content:" + json);
                 
                 try
                 {
-                    // 由于JSON文件直接是数组格式，需要包装成对象
                     string wrapped = $"{{\"contacts\":{json}}}";
                     ContactListWrapper wrapper = JsonUtility.FromJson<ContactListWrapper>(wrapped);
                     Contacts = wrapper.contacts;
                     
-                    Debug.Log("已加载联系人数量：" + Contacts.Count);
+                    Debug.Log("Number of contacts loaded:" + Contacts.Count);
 
                     foreach (var contact in Contacts)
                     {
-                        Debug.Log($"联系人：{contact.name}，流地址：{contact.streamUrl}");
+                        Debug.Log($"Contact:{contact.name}, Stream address:{contact.streamUrl}");
                     }
                 }
                 catch (System.Exception e)
                 {
-                    Debug.LogError("解析联系人JSON失败: " + e.Message);
+                    Debug.LogError("Failed to parse contact JSON:" + e.Message);
                 }
             }
             else
             {
-                Debug.LogError("读取联系人文件失败: " + www.error);
-                Debug.LogError("请求的URL: " + sourcePath);
+                Debug.LogError("Failed to read contacts file:" + www.error);
+                Debug.LogError("URL: " + sourcePath);
             }
         }
     }
