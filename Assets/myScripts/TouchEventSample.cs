@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using RenderHeads.Media.AVProVideo.Demos; // 添加引用以访问LookAround360
-using RenderHeads.Media.AVProVideo; // 添加引用以访问MediaPlayer
+using RenderHeads.Media.AVProVideo.Demos; // to access LookAround360
+using RenderHeads.Media.AVProVideo; // to access MediaPlayer
 
 namespace Rokid.UXR.Demo
 {
@@ -14,6 +14,14 @@ namespace Rokid.UXR.Demo
         public Camera recoderCamera;
         public Text recordTxt;
         public Button recordButton;
+        public Button addButton;
+        public Button displayButton;
+        
+        [SerializeField] private InputField nameInputField;
+        [SerializeField] private InputField urlInputField;
+
+
+
         private bool isRecording = false;
         private float recordingTime;
         private bool active = true;
@@ -24,7 +32,7 @@ namespace Rokid.UXR.Demo
         public GameObject worldCanvas;
         
         // 添加控制WorldCanvas的按钮引用
-        public Button displayButton;
+
         
         // 添加一个变量跟踪WorldCanvas的显示状态
         private bool isWorldCanvasVisible = true;
@@ -32,10 +40,9 @@ namespace Rokid.UXR.Demo
         // 添加媒体播放器相关引用
         public LookAround360 lookAround360Controller;
 
-        public GameObject mediaSphere; // 视频播放的球体
+        public GameObject mediaSphere;
 
-        [SerializeField] private InputField nameInputField;
-        [SerializeField] private InputField urlInputField;
+
 
         // 跟踪媒体播放状态
         private bool isMediaPlaying = false;
@@ -57,7 +64,7 @@ namespace Rokid.UXR.Demo
                 logManagerObj.AddComponent<LogManager>();
             }
             
-            LogManager.Instance.Log("应用启动");
+            LogManager.Instance.Log("launch app");
 
             OfflineVoiceModule.Instance.AddInstruct(LANGUAGE.CHINESE, "回到桌面", "hui dao zhuo mian", gameObject.name, "OnReceive");
             OfflineVoiceModule.Instance.AddInstruct(LANGUAGE.CHINESE, "退出应用", "tui chu yin yong", gameObject.name, "OnReceive");
@@ -127,8 +134,6 @@ namespace Rokid.UXR.Demo
             worldCanvas.SetActive(true);
             displayButton.onClick.AddListener(ToggleWorldCanvas);
 
-
-            // 如果没有在Inspector中设置引用，尝试查找
             if (lookAround360Controller == null)
             {
                 lookAround360Controller = FindObjectOfType<LookAround360>();
@@ -153,7 +158,7 @@ namespace Rokid.UXR.Demo
             //     }
             // }
             
-            // 初始状态 - 媒体球体隐藏
+
             if (mediaSphere != null)
             {
                 mediaSphere.SetActive(false);
@@ -193,7 +198,6 @@ namespace Rokid.UXR.Demo
             }, recordFilePath, false);
         }
 
-        // 新增方法：停止录制
         private void StopRecording()
         {
             if (isRecording)
@@ -336,19 +340,17 @@ namespace Rokid.UXR.Demo
                 return;
             }
 
-
             if (nameInputField != null && urlInputField != null)
             {
                 nameInputField.text = name;
                 urlInputField.text = url;
             }
             recordTxt.text = "Calling:" + name + " " + url;
-            // 1. 设置地址并播放
             lookAround360Controller.SetUrl(url);
 
             lookAround360Controller.PlayMedia();
 
-            // 2. 确保 360 球体可见
+            // 2. Ensure the 360 sphere is visible
             if (mediaSphere != null)
             {
                 mediaSphere.SetActive(true);
@@ -358,8 +360,7 @@ namespace Rokid.UXR.Demo
 
             isMediaPlaying = true;
             // isMediaPreloaded = true;
-
-            Debug.Log("▶ PlayMediaFromUrl: " + url);
+            Debug.Log("PlayMediaFromUrl: " + url);
         }
 
 

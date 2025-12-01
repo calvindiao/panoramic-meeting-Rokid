@@ -1,5 +1,5 @@
 [
-  { "name": "Jimmy",   "streamUrl": "http://pull.techliker.com/live/camera.m3u8" },
+  { "name": "Jimmy",   "streamUrl": "http://192.168.5.4:18000/hls/xLHNShZvR/xLHNShZvR_live.m3u8" },
   { "name": "Bovey",   "streamUrl": "http://192.168.5.22:18000/hls/bovey.m3u8" },
   { "name": "Dr. Leduc","streamUrl": "http://192.168.5.22:18000/hls/leduc.m3u8" },
   { "name": "Calvin",  "streamUrl": "http://nas.pandior.ink:18000/hls/tqS5rMLNRz/tqS5rMLNRz_live.m3u8" }
