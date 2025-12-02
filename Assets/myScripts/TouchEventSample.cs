@@ -16,37 +16,25 @@ namespace Rokid.UXR.Demo
         public Button recordButton;
         public Button addButton;
         public Button displayButton;
-
+        public Button quitButton;
         [SerializeField] private InputField nameInputField;
         [SerializeField] private InputField urlInputField;
-
-
-
-        private bool isRecording = false;
-        private float recordingTime;
-        private bool active = true;
         [SerializeField]
         private LaserBeam laser;
+
+        private float recordingTime;
         private string recordFilePath;
+        private bool isRecording = false;
+        private bool active = true;
 
-        public GameObject worldCanvas;
-
-        // 添加控制WorldCanvas的按钮引用
-
-
-        // 添加一个变量跟踪WorldCanvas的显示状态
         private bool isWorldCanvasVisible = true;
-
-        // 添加媒体播放器相关引用
-        public LookAround360 lookAround360Controller;
-
-        public GameObject mediaSphere;
-
-
-
-        // 跟踪媒体播放状态
         private bool isMediaPlaying = false;
         private bool isMediaPreloaded = false;
+        // 添加媒体播放器相关引用
+        public LookAround360 lookAround360Controller;
+        public GameObject mediaSphere;
+        public GameObject worldCanvas;
+
 
         void Start()
         {
@@ -178,7 +166,7 @@ namespace Rokid.UXR.Demo
             {
                 isWorldCanvasVisible = !isWorldCanvasVisible;
                 worldCanvas.SetActive(isWorldCanvasVisible);
-
+                displayButton.GetComponentInChildren<Text>().text = isWorldCanvasVisible ? "Hide list" : "Show list";
                 Debug.Log("WorldCanvas visibility: " + (isWorldCanvasVisible ? "Visible" : "Hidden"));
             }
         }
@@ -207,7 +195,7 @@ namespace Rokid.UXR.Demo
                 {
                     isRecording = false;
                     if (recordButton != null)
-                        recordButton.GetComponentInChildren<Text>().text = "Start Record";
+                        recordButton.GetComponentInChildren<Text>().text = "Record";
                 });
             }
         }
@@ -340,13 +328,15 @@ namespace Rokid.UXR.Demo
                 Debug.LogError("PlayMediaFromUrl::Media player reference not set!");
                 return;
             }
-
+            if (displayButton != null)
+                displayButton.gameObject.SetActive(false);
             if (nameInputField != null && urlInputField != null)
             {
                 nameInputField.text = name;
                 urlInputField.text = url;
             }
             recordTxt.text = "Calling:" + name + " " + url;
+
             lookAround360Controller.SetUrl(url);
 
             lookAround360Controller.PlayMedia();
@@ -360,6 +350,7 @@ namespace Rokid.UXR.Demo
             ToggleWorldCanvas();
 
             isMediaPlaying = true;
+
             // isMediaPreloaded = true;
             Debug.Log("PlayMediaFromUrl: " + url);
         }
