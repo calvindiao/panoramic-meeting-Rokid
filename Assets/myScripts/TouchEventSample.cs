@@ -153,10 +153,16 @@ namespace Rokid.UXR.Demo
                 mediaSphere.SetActive(false);
             }
 
+            if (quitButton != null)
+            {
+                quitButton.gameObject.SetActive(false);
+                quitButton.onClick.AddListener(OnQuitClicked);
+            }
+
             // 预加载媒体但不开始播放
             if (lookAround360Controller != null && lookAround360Controller.mediaPlayer != null)
             {
-                // PreloadMedia();
+                lookAround360Controller.PreloadMedia();
             }
 
         }
@@ -328,8 +334,8 @@ namespace Rokid.UXR.Demo
                 Debug.LogError("PlayMediaFromUrl::Media player reference not set!");
                 return;
             }
-            if (displayButton != null)
-                displayButton.gameObject.SetActive(false);
+            if (displayButton != null) displayButton.gameObject.SetActive(false);
+            if (quitButton != null) quitButton.gameObject.SetActive(true);
             if (nameInputField != null && urlInputField != null)
             {
                 nameInputField.text = name;
@@ -356,21 +362,6 @@ namespace Rokid.UXR.Demo
         }
 
 
-
-        // 添加预加载媒体的方法
-        private void PreloadMedia()
-        {
-            if (lookAround360Controller == null || lookAround360Controller.mediaPlayer == null)
-            {
-                Debug.LogError("Media player reference not set!");
-                return;
-            }
-
-            Debug.Log("Preloading media connection...");
-            lookAround360Controller.PreloadMedia();
-            isMediaPreloaded = true;
-        }
-
         void OnReceive(string msg)
         {
             if (string.Equals(msg, "回到桌面")) Application.Quit();
@@ -396,6 +387,23 @@ namespace Rokid.UXR.Demo
             }
         }
 
+        private void OnQuitClicked()
+        {
+            // 隐藏播放器或 360 球
+            if (mediaSphere != null) mediaSphere.SetActive(false);
+
+            // 停止或暂停播放（可选）
+            if (lookAround360Controller != null && lookAround360Controller.mediaPlayer != null)
+            {
+                lookAround360Controller.PauseMedia(); //
+            }
+
+            if (displayButton != null) displayButton.gameObject.SetActive(true);
+            if (quitButton != null) quitButton.gameObject.SetActive(false);
+
+            // 如果有需要，恢复画布
+            if (!isWorldCanvasVisible) ToggleWorldCanvas();
+        }
 
     }
 }

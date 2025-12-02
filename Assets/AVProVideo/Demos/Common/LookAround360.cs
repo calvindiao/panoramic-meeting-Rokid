@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 //-----------------------------------------------------------------------------
@@ -17,8 +18,9 @@ namespace RenderHeads.Media.AVProVideo.Demos
 		public MediaPlayer mediaPlayer;
 		
 		// URL of the media to play
-		private string mediaUrl = "http://192.168.5.20:18000/hls/tqS5rMLNRz/tqS5rMLNRz_live.m3u8";
-		private bool autoPlayOnStart = false;
+		[SerializeField] private string mediaUrl = "http://192.168.5.4:18000/hls/6YuNs0Zvgz/6YuNs0Zvgz_live.m3u8";
+
+		[SerializeField] private bool autoPlayOnStart = false;
 		private ApplyToMesh applyToMesh;
 		// Add preload flag
 		private bool isMediaPreloaded = false;
@@ -42,31 +44,29 @@ namespace RenderHeads.Media.AVProVideo.Demos
 			}
 		}
 		
+
 		public void PreloadMedia()
 		{
-			if (mediaPlayer != null)
-			{
-				// mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, mediaUrl, false);
-				// isMediaPreloaded = true;
-				Debug.Log("Calvin_Not Execute!!! Media preloaded: " + mediaUrl);
-			}
+			if (mediaPlayer == null || string.IsNullOrEmpty(mediaUrl)) return;
+			// 打开但不自动播放
+			mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, mediaUrl, false);
+			isMediaPreloaded = true;
+			Debug.Log("Preloaded: " + mediaUrl);
 		}
 		
 		public void PlayMedia()
 		{
-			if (mediaPlayer != null)
+			if (mediaPlayer == null) return;
+
+			if (!isMediaPreloaded)
 			{
-				if (!isMediaPreloaded)
-				{
-					mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, mediaUrl, true);
-					//isMediaPreloaded = true;
-				}
-				else
-				{
-					mediaPlayer.Play();
-				}
-				
-				Debug.Log("Media playback started: " + mediaUrl);
+				// 没预加载就直接打开并播放
+				mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, mediaUrl, true);
+				isMediaPreloaded = true;
+			}
+			else
+			{
+				mediaPlayer.Play();
 			}
 		}
 		public void ResumeMedia()
@@ -104,8 +104,13 @@ namespace RenderHeads.Media.AVProVideo.Demos
 
 		public void SetUrl(string url)
 		{
+			if (string.Equals(mediaUrl, url, StringComparison.OrdinalIgnoreCase)) 
+			{
+				Debug.Log("SetUrl: URL is the same as current, no action taken.");
+				return;
+			}
 			mediaUrl = url;
-			Debug.Log("Calvin_SetMediaUrl: " + mediaUrl);
+			isMediaPreloaded = false; // 换源后需要重新预加载
 		}
 
 		void Update()
