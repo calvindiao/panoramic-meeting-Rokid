@@ -2002,7 +2002,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: quit
+  m_Text: End Call
 --- !u!222 &960493767
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2846,7 +2846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.48968792, b: 0.33490568, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4570,6 +4570,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mediaPlayer: {fileID: 2069461675}
+  mediaUrl: http://192.168.5.4:18000/hls/6YuNs0Zvgz/6YuNs0Zvgz_live.m3u8
+  autoPlayOnStart: 0
 --- !u!81 &1937578675
 AudioListener:
   m_ObjectHideFlags: 0

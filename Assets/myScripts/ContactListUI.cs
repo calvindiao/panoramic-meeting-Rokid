@@ -12,8 +12,8 @@ namespace Rokid.UXR.Demo
         [Header("Scene References")]
         [SerializeField] private Transform contentParent;   // ScrollView/Content
         [SerializeField] private Button buttonPrefab;       // ContactButton prefab
-        [SerializeField] private LookAround360 lookAround;  // 你的播放器控制脚本（可选）
-        [SerializeField] private TouchEventSample touchEventSample;   // 新增：主控制脚本引用
+        [SerializeField] private LookAround360 lookAround; 
+        [SerializeField] private TouchEventSample touchEventSample;  
 
         private void OnEnable()
         {
